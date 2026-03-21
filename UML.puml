@@ -1,0 +1,23 @@
+@startuml
+skinparam handwritten false
+skinparam monochrome true
+
+title Iterative Refinement State Machine
+
+state "IDLE" as Idle
+state "START_REFINEMENT" as Start
+state "RECORD_CRITIQUE" as Critique
+state "APPLY_REVISION" as Revision
+state "FINALIZE_OUTPUT" as Finalize
+state "MAX_ITERATIONS_REACHED" as MaxReached
+
+[*] --> Idle
+Idle --> Start : start_refinement(goal)
+Start --> Critique : record_critique(feedback)
+Critique --> Revision : apply_revision(newContent)
+Revision --> Critique : Repeat?
+Revision --> MaxReached : iterationCount >= maxIterations
+Revision --> Finalize : finalize_output(reason)
+Critique --> Finalize : finalize_output(reason)
+
+@enduml
