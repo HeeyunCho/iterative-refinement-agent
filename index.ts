@@ -215,10 +215,10 @@ server.setRequestHandler(CallToolRequestSchema, async (request) => {
         if (!session) throw new Error(`Session ${sessionId} not found`);
 
         let history = `SESSION: ${session.id}\nGOAL: ${session.goal}\nSTATUS: ${session.status}\nITERATION: ${session.currentIteration}/${session.maxIterations}\n\n`;
-        session.versions.forEach((v) => {
-          history += `--- VERSION ${v.version} (${v.timestamp}) ---\nCONTENT:\n${v.content}\n`;
-          if (v.critique) {
-            history += `CRITIQUE:\n${v.critique}\n`;
+        session.versions.forEach((refinementVersionHistoryItem) => {
+          history += `--- VERSION ${refinementVersionHistoryItem.version} (${refinementVersionHistoryItem.timestamp}) ---\nCONTENT:\n${refinementVersionHistoryItem.content}\n`;
+          if (refinementVersionHistoryItem.critique) {
+            history += `CRITIQUE:\n${refinementVersionHistoryItem.critique}\n`;
           }
           history += `\n`;
         });
